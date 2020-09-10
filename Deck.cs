@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
+
 namespace FormatieveOpdracht1
 {
+
     public class Deck
     {
         private int deckGrootte;
         private List<Card> cards;
-        private List<string> shuffledCards = null;
+        private List<Card> shuffledCards;
 
+        //Constructor
+        public Deck()
+        {
+            this.deckGrootte = 52;
+            this.cards = cards;
+        }
 
-        public void getAllCards()
+        public List<Card> getAllCards()
         {
             // Functie die alle kaarten in het spel brengt. Maakt een range van
             // 1 tot 13 (aantal ranks), en maakt voor elke suit 13 hiervan aan
@@ -29,23 +37,30 @@ namespace FormatieveOpdracht1
                 cards.Add(new Card("diamonds", rank));
             }
 
-            ////////////////// Tests om te zien of de kaarten werken
-            foreach(var card in cards)
-            {
-                Console.WriteLine(card.getRank().ToString() + " " + card.getSuit());
-            }
-            Console.WriteLine(cards.Count());
+            return cards;
         }
 
-        public Deck()
+
+        // Met onderstaande methode worden de kaarten van de huidige lijst (alles op nette volgorde aangemaakt)
+        // gepakt en geshuffeld. Deze lijst wordt in een nieuwe lijst 'shuffledcards' gestopt. 
+        Random rng = new Random();
+        public List<Card> shuffleCards(List<Card> unshuffledCards)
         {
-            this.deckGrootte = 52;
-            this.cards = cards;
+            int n = unshuffledCards.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                Card value = unshuffledCards[k];
+                unshuffledCards[k] = unshuffledCards[n];
+                unshuffledCards[n] = value;
+            }
+
+            shuffledCards = unshuffledCards;
+
+            return shuffledCards;
         }
-        public void shuffleCards(List<string> unshuffledCards)
-        {
-            //hier komt de method
-        }
+    }
 
     }
-}
+
